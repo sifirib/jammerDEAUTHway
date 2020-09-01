@@ -4,7 +4,7 @@ import time
 import sqlite3
 
 
-wifi_name = 'ceker'
+wifi_name = input("Give the name of the WIFI exactly: ")
 
 def getInterfaceName():
     process_of_interface_output = subprocess.getoutput("iw dev | grep Interface")
