@@ -3,7 +3,7 @@
 This tool can automatically drop devices connected to wifi networks around you from the wifi. All you have to do is meet the requirements, give permissions to the files and run it as root.
 Have fun :>
 
-###### REQUIPMENTS:
+###### REQUIREMENTS:
 ~python3
 `sudo apt-get install python3`
 
