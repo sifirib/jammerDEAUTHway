@@ -25,3 +25,4 @@ Have fun :>
 
 ###### Run it:
 Run the autodropper.py file as root.
+`python3 autodropp.py`
