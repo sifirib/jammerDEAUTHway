@@ -13,8 +13,8 @@ Have fun :>
 ~subprocess
 `pip install subprocess`
 
-~airodump-ng
-`sudo apt-get install airodump-ng`
+~aircrack-ng
+`sudo apt-get install aircrack-ng`
 
 
 ###### HaveToDo:
