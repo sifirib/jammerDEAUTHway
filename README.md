@@ -24,5 +24,5 @@ Have fun :>
 
 
 ###### Run it:
-Run the autodropper.py file as root.
-`python3 autodropp.py`
+Run the autodropper.py file as root. (You must be in the same path as this file!) 
+`python3 autodropper.py`
