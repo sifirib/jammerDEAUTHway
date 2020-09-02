@@ -10,9 +10,6 @@ Have fun :>
 ~sqlite3 
 `sudo apt-get install sqlite3`
 
-~subprocess
-`pip install subprocess`
-
 ~aircrack-ng
 `sudo apt-get install aircrack-ng`
 
