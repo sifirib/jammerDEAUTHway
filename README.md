@@ -5,18 +5,24 @@ Have fun :>
 
 ###### REQUIREMENTS:
 ~python3
+
 `sudo apt-get install python3`
 
+
 ~sqlite3 
+
 `sudo apt-get install sqlite3`
 
+
 ~aircrack-ng
+
 `sudo apt-get install aircrack-ng`
 
 
 ###### HaveToDo:
 
 `chmod +x kismet2sqlite.sh`
+
 `chmod +x kismet3sqlite.sh`
 
 
