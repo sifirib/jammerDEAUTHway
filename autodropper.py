@@ -129,8 +129,14 @@ def drop(device_mac, network_mac, interface_name_monitor):
     print(device_mac)
     os.system(f"gnome-terminal -- aireplay-ng -0 {during} -a {network_mac} -c {device_mac} --ignore-negative-one {interface_name_monitor}")
 
+def clean():
+    os.system("rm -rf firstScan/o*")
+    os.system("rm -rf secondScan/o*")
+    os.system("rm -rf allScan/allfScan/o*")
+    os.system("rm -rf allScan/allsScan/o*")
 
 
+clean()
 interface_name = getInterfaceName()
 print(interface_name)
 
@@ -237,3 +243,4 @@ if isMonitor():
 
 else:
     print("The mode has NOT changed to monitor instead of managed." + CRED +"\nYou should run it as root!" + CEND)
+
