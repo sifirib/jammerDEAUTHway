@@ -26,7 +26,7 @@ Have fun :>
 `chmod +x kismet3sqlite.sh`
 
 
-###### Run it:
+###### RUN IT:
 Run the autodropper.py file as root with a few parameters. (You must be in the same path as this file!) 
 
 parameters:
