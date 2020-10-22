@@ -28,7 +28,10 @@ Have fun :>
 
 ###### Run it:
 Run the autodropper.py file as root with a few parameters. (You must be in the same path as this file!) 
+
 parameters:
 -t (targetname): Give the name of the wifi name you want to attack. (If you want to attack all WIFI devices around you do not use this parameter!)
+
 -n (number of packages): Give the number of the DEAUTH packages will be send to the target(s).
+
 `python3 autodropper.py -t <targetname> -n <number of packages you want>`
