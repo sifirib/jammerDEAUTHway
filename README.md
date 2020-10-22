@@ -27,6 +27,6 @@ Have fun :>
 
 
 ###### Run it:
-Run the autodropper.py file as root. (You must be in the same path as this file!) 
+Run the autodropper.py file as root with a few parameters. (You must be in the same path as this file!) 
 
-`python3 autodropper.py`
+`python3 autodropper.py -t <targetname> -n <number of packages you want>`
