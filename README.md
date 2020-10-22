@@ -35,4 +35,4 @@ parameters:
 
 -n (number of packages): Give the number of the DEAUTH packages will be send to the target(s).
 
-`python3 autodropper.py -t <targetname> -n <number of packages you want>`
+`python3 autodropper.py -t <target name> -n <number of the packages>`
