@@ -136,7 +136,7 @@ def clean():
     os.system("rm -rf allScan/allfScan/o*")
     os.system("rm -rf allScan/allsScan/o*")
 
-def re_eneable_managedmode(interface_name_monitor):
+def re_eneable_managedmode():
     os.system(f"airodump-ng stop {interface_name_monitor}")
 
 
