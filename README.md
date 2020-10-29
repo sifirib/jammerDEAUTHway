@@ -20,6 +20,11 @@ It is illegal to monitor and / or record interpersonal communication without pro
 The users are deemed to have accepted the legal liabilities, material, moral and any possible damages that may arise from the legal and illegal use of this tool, and the developers cannot be held responsible in any way.
 
 Any damages and liabilities arising from the use of this code belong to the users.
+### HaveToDo: 
+
+Give the permissions to the shell scripts. Run following command as root.
+
+`chmod +x install.sh kismet2sqlite.sh kismet3sqlite.sh`
 
 ### REQUIREMENTS:
 
