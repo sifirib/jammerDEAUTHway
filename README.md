@@ -21,20 +21,15 @@ The users are deemed to have accepted the legal liabilities, material, moral and
 
 Any damages and liabilities arising from the use of this code belong to the users.
 
-###### REQUIREMENTS:
-~python3
+### REQUIREMENTS:
 
-`sudo apt-get install python3`
+#### You can install all of required packages automatically by running install.sh as root:
 
+`bash install.sh`
 
-~sqlite3 
+#### Or install them manually:
 
-`sudo apt-get install sqlite3`
-
-
-~aircrack-ng
-
-`sudo apt-get install aircrack-ng`
+`sudo apt-get install python3 sqlite3 aircrack-ng net-tools gnome-terminal`
 
 
 ##### RUN IT:
