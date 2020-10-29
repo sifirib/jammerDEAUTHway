@@ -37,13 +37,6 @@ Any damages and liabilities arising from the use of this code belong to the user
 `sudo apt-get install aircrack-ng`
 
 
-###### HaveToDo:
-
-`chmod +x kismet2sqlite.sh`
-
-`chmod +x kismet3sqlite.sh`
-
-
 ##### RUN IT:
 Run the autodropper.py file as root with a few parameters. (You must be in the same path as this file!) 
 
