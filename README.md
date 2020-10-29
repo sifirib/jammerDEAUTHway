@@ -32,8 +32,13 @@ Any damages and liabilities arising from the use of this code belong to the user
 `sudo apt-get install python3 sqlite3 aircrack-ng net-tools gnome-terminal`
 
 
-##### RUN IT:
+## Run it / Usage :
 Run the autodropper.py file as root with a few parameters. (You must be in the same path as this file!) 
+
+`python3 autodropper.py -t <target name> -n <number of the packages> -m <mac address> -q <quality value>`
+
+`python3 autodropper.py -t office -n 1200 -m aa:bb:cc:dd:ee:ff -q 8`
+
 
 ##### parameters:
 
@@ -45,8 +50,4 @@ Run the autodropper.py file as root with a few parameters. (You must be in the s
 
 -q or --quality : Enter a number between 1 and 20. The higher the number, the higher the quality of the attack as well as the time taken!(default=1)
 
-## Usage:
 
-`python3 autodropper.py -t <target name> -n <number of the packages> -m <mac address> -q <quality value>`
-
-`python3 autodropper.py -t office -n 1200 -m aa:bb:cc:dd:ee:ff -q 8`
