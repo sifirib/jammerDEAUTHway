@@ -28,6 +28,10 @@ elif [[ ! -z $PKG ]]; then
   pkg update
   pkg install python3 sqlite3 net-tools aircrack-ng sqlite3 gnome-terminal
   exit 1;
+elif [[ ! -z $MAKE ]]; then
+  make update
+  make install python3 sqlite3 net-tools aircrack-ng sqlite3 gnome-terminal
+  exit 1;
 else
   echo "Cannot install packages! Try install them manually."
   exit 1;
