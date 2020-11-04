@@ -22,7 +22,7 @@ The users are deemed to have accepted the legal liabilities, material, moral and
 Any damages and liabilities arising from the use of this code belong to the users.
 ### HaveToDo: 
 
-Give the permissions to the shell scripts. Run following command as root.
+Make bash scripts executable. Run following command as root.
 
 `chmod +x install.sh kismet2sqlite.sh kismet3sqlite.sh`
 
