@@ -40,7 +40,7 @@ Make bash scripts executable. Run following command as root.
 ## Run it / Usage :
 Run the autodropper.py file as root with a few parameters. (You must be in the same path as this file!) 
 
-`python3 autodropper.py -t <target name> -n <number of the packages> -m <mac address> -q <quality value>`
+`python3 autodropper.py -t <target name> -n <number of the packages> -m <mac address you want to change with> -q <quality value>`
 
 `python3 autodropper.py -t office -n 1200 -m aa:bb:cc:dd:ee:ff -q 8`
 
