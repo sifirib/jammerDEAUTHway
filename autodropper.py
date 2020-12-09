@@ -223,7 +223,7 @@ if sure not in s:
 clean()
 if not is_monitor():
     change_interface_mod(get_interface_name())
-else:
+if is_monitor():
     print("The mode has changed to monitor instead of managed.")
     interface_name_monitor = get_interface_name()
 
