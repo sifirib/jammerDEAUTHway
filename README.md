@@ -1,17 +1,17 @@
 
 #### jammerDEAUTHway
-This tool can automatically drop devices connected to all wifi networks around you from the wifi. All you have to do is meet the requirements, give permissions to the files and run it as root.
+This tool can automatically drop devices connected to all WiFi networks around you from the device. All you have to do is meet the requirements, give permissions to the files and run it as root.
 Have fun :>
 
 ## Features:
 
-+You can change your MAC address by giving an address you want.
+[+] Change your MAC address by giving an address you want.
 
-+You can change quality of the attack by giving number between 1 and 20.
+[+] Change quality of the attack by giving number between 1-20.
 
-+You can attack only a specific target by giving name of the WIFI correctly.
+[+] Attack only a specific target by giving name of the WiFi (ESSID) correctly.
 
-+You can determine how many packages will be sent to the target(s).
+[+] Determine how many packages will be sent to the target(s).
 
 
 ### Important Note: 
@@ -22,7 +22,7 @@ The users are deemed to have accepted the legal liabilities, material, moral and
 Any damages and liabilities arising from the use of this code belong to the users.
 ### HaveToDo: 
 
-Make bash scripts executable. Run following command as root.
+Make bash scripts executable. (Run following command as root.)
 
 `chmod +x install.sh kismet2sqlite.sh kismet3sqlite.sh`
 
@@ -34,11 +34,11 @@ Make bash scripts executable. Run following command as root.
 
 #### Or install them manually:
 
-`sudo apt-get install python3 sqlite3 aircrack-ng net-tools gnome-terminal`
+`<your_package_manager_install_command> python3 sqlite3 aircrack-ng net-tools gnome-terminal`
 
 
 ## Run it / Usage :
-Run the autodropper.py file as root with a few parameters. (You must be in the same path as this file!) 
+Run the autodropper.py file (as root) with a few parameters. (You must be in the same path as this file!) 
 
 `python3 autodropper.py -t <target name> -n <number of the packages> -m <mac address you want to change with> -q <quality value>`
 
@@ -47,12 +47,12 @@ Run the autodropper.py file as root with a few parameters. (You must be in the s
 
 ##### parameters:
 
--t or --target : Give the name of the wifi name you want to attack. (If you want to attack all WIFI devices around you do not use this parameter!)
+-t or --target : Give the name of the WiFi name you want to attack. (If you want to attack all WiFi devices around you, do not use this parameter!)
 
--n or --number : Give the number of the DEAUTH packages will be send to the target(s).
+-n or --number : Give the number of the DEAUTH packages will be sent to the target(s).
 
 -m or --mac : Temporary new MAC address you want to change with.
 
--q or --quality : Enter a number between 1 and 20. The higher the number, the higher the quality of the attack as well as the time taken!(default=1)
+-q or --quality : Enter a number between 1-20. The higher the number, the higher the quality of the attack as well as the time taken! (default=1)
 
 
